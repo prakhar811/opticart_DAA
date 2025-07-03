@@ -1,18 +1,21 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBlLYPF9rUmQ43sYYnhm0eDEL3NIw8UOdc",
-  authDomain: "opticart-41b16.firebaseapp.com",
-  projectId: "opticart-41b16",
-  storageBucket: "opticart-41b16.firebasestorage.app",
-  messagingSenderId: "727404996456",
-  appId: "1:727404996456:web:0d31b8ec749230755018dd",
-  measurementId: "G-6H3BR4BP08"
+  apiKey: "AIzaSyDbmbrTHU_Ql2an9flZWIweN4EPiwk4E_o",
+  authDomain: "opticart-3462f.firebaseapp.com",
+  projectId: "opticart-3462f",
+  storageBucket: "opticart-3462f.firebasestorage.app",
+  messagingSenderId: "384037987965",
+  appId: "1:384037987965:web:41f872d256e31fe6427314",
+  measurementId: "G-L9Y3TTP1L7"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-
-export { db };
+const analytics = getAnalytics(app);

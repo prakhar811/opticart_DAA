@@ -1,17 +1,19 @@
-// /client/src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBlLYPF9rUmQ43sYYnhm0eDEL3NIw8UOdc",
-    authDomain: "opticart-41b16.firebaseapp.com",
-    projectId: "opticart-41b16",
-    storageBucket: "opticart-41b16.firebasestorage.app",
-    messagingSenderId: "727404996456",
-    appId: "1:727404996456:web:0d31b8ec749230755018dd"
+  apiKey: "AIzaSyDbmbrTHU_Ql2an9flZWIweN4EPiwk4E_o",
+  authDomain: "opticart-3462f.firebaseapp.com",
+  projectId: "opticart-3462f",
+  storageBucket: "opticart-3462f.firebasestorage.app",
+  messagingSenderId: "384037987965",
+  appId: "1:384037987965:web:41f872d256e31fe6427314",
+  measurementId: "G-L9Y3TTP1L7"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
-export { db };
+export { db, analytics };

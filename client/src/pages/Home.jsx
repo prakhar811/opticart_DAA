@@ -67,17 +67,26 @@ function Home() {
   const getMomentum = (demandRate, stockPenalty, momentum, basePrice, dynamicPrice) => {
     if (stockPenalty === 1) return 0;
     momentum = 0;
+    
+    // Enhanced momentum calculation
     if (demandRate < 0.25) momentum -= (basePrice > dynamicPrice) ? 2 : 3;
     else if (demandRate < 0.5) momentum -= (basePrice > dynamicPrice) ? 0 : 1;
     else if (demandRate < 1.25) momentum += (basePrice > dynamicPrice) ? 1 : 0;
     else if (demandRate < 1.5) momentum += (basePrice > dynamicPrice) ? 2 : 1;
     else if (demandRate < 2) momentum += (basePrice > dynamicPrice) ? 3 : 2;
     else momentum += (basePrice > dynamicPrice) ? 4 : 3;
+    
     if (stockPenalty < 0.25) momentum -= (basePrice > dynamicPrice) ? 1 : 2;
     else if (stockPenalty < 0.4) momentum -= (basePrice > dynamicPrice) ? 0 : 1;
     else if (stockPenalty < 0.65) momentum += (basePrice > dynamicPrice) ? 1 : 0;
     else if (stockPenalty < 0.9) momentum += (basePrice > dynamicPrice) ? 3 : 1;
     else momentum += (basePrice > dynamicPrice) ? 4 : 2;
+    
+    // DOUBLE MOMENTUM when price is below base and trending upward
+    if (dynamicPrice < basePrice && momentum > 0) {
+      momentum *= 2;
+    }
+    
     return momentum;
   };
 
@@ -112,23 +121,32 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(async () => {
       const now = Date.now();
-      const thirtySecAgo = now - 30000;
-      const oneTwentySecAgo = now - 120000;
+      const fifteenSecAgo = now - 15000; // Changed to 15 seconds
+      const thirtySecAgo = now - 30000; // Changed to 30 seconds (2x the interval)
       const batch = writeBatch(db);
       let anyUpdates = false;
 
       productsRef.current.forEach(p => {
         if (!p.purchaseHistory) return;
-        const cleaned = p.purchaseHistory.filter(ts => new Date(ts).getTime() >= oneTwentySecAgo);
+        const cleaned = p.purchaseHistory.filter(ts => new Date(ts).getTime() >= thirtySecAgo);
         const demandScore = cleaned.length;
-        const salesRate = cleaned.filter(ts => new Date(ts).getTime() >= thirtySecAgo).length;
+        const salesRate = cleaned.filter(ts => new Date(ts).getTime() >= fifteenSecAgo).length;
         const avgRate = demandScore / 4;
         const stockPenalty = 1 - p.stock / p.totalStock;
         const demandRate = avgRate ? salesRate / avgRate : 0;
         const newMomentum = getMomentum(demandRate, stockPenalty, p.momentum, p.basePrice, p.dynamicPrice);
-        const minPrice = 0.5 * p.basePrice;
+        const minPrice = 0.75 * p.basePrice;
         const maxPrice = 1.75 * p.basePrice;
-        const newPrice = Math.round(Math.max(minPrice, Math.min(maxPrice, p.dynamicPrice * (100 + newMomentum) / 100)));
+        
+        // Enhanced price calculation with double momentum effect
+        let priceMultiplier = (100 + newMomentum) / 100;
+        let newPrice = Math.round(Math.max(minPrice, Math.min(maxPrice, p.dynamicPrice * priceMultiplier)));
+        
+        // Additional safeguard: If price is below base and momentum is positive, ensure faster recovery
+        if (p.dynamicPrice < p.basePrice && newMomentum > 0) {
+          const recoveryBoost = 1 + (newMomentum / 100); // Additional boost
+          newPrice = Math.round(Math.max(minPrice, Math.min(maxPrice, p.dynamicPrice * recoveryBoost)));
+        }
 
         const updates = {};
         if (JSON.stringify(cleaned) !== JSON.stringify(p.purchaseHistory)) updates.purchaseHistory = cleaned;
@@ -154,7 +172,7 @@ function Home() {
           console.error("Batch commit failed:", e);
         }
       }
-    }, 30000);
+    }, 15000); // Changed to 15 seconds
 
     return () => clearInterval(interval);
   }, []);
