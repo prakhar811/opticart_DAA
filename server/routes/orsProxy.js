@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 
-const ORS_API_KEY = "5b3ce3597851110001cf62485d377b15c4514202b629ef67b1a10bf5";
+const ORS_API_KEY = process.env.ORS_API_KEY;
 
 router.post('/route', async (req, res) => {
   try {
