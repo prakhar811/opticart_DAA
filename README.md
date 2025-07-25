@@ -103,7 +103,7 @@ OptiCart is an intelligent e-commerce platform developed to assist small and med
 </div>
 
 
-- Slow-moving inventory is cleared at discounted prices to reduce dead stock  
+- ### Slow-moving inventory is cleared at discounted prices to reduce dead stock  
 - ### Optimized routes cut down average delivery distances by 30–40%
 <div align="center">
   <img src="/client/src/assets/TSP.png" alt="Home Page" width="500"/>
@@ -115,8 +115,8 @@ OptiCart is an intelligent e-commerce platform developed to assist small and med
 </div>
 
 
-- Firebase integration ensures real-time product and route synchronization  
-- Works efficiently for up to 15–20 delivery locations with acceptable accuracy
+- ### Firebase integration ensures real-time product and route synchronization  
+- ### Works efficiently for up to 15–20 delivery locations with acceptable accuracy
 
 
 
