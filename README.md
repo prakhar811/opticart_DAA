@@ -46,10 +46,6 @@ OptiCart is an intelligent e-commerce platform developed to assist small and med
 - Each product has a base price, which is adjusted based on real-time conditions  
 - Inventory and frequency are tracked using Firebase  
 
-<div align="center">
-  <img src="/client/src/assets/pricing-logic.png" alt="Pricing Logic" width="500"/>
-</div>
-
 ### 2. Route Optimization Algorithms
 
 - **Traveling Salesman Problem (TSP)**  
