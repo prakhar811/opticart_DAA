@@ -14,6 +14,7 @@ An intelligent e-commerce platform with dynamic pricing and optimized delivery r
 - [Architecture](#architecture)  
 - [Results and Discussion](#results-and-discussion)  
 - [Project Structure](#project-structure)  
+- [Firebase Setup Guide](#firebase-setup-guide)  
 - [Future Scope](#future-scope)  
 
 ---
@@ -40,10 +41,14 @@ OptiCart is an intelligent e-commerce platform developed to assist small and med
 
 ### 1. Dynamic Pricing Algorithm (Greedy + Momentum-based)
 
-- Prices increase if the product is being bought frequently
-- Prices decrease if a product remains in stock for long
-- Each product has a base price, which is adjusted based on real-time conditions
-- Inventory and frequency are tracked using Firebase
+- Prices increase if the product is being bought frequently  
+- Prices decrease if a product remains in stock for long  
+- Each product has a base price, which is adjusted based on real-time conditions  
+- Inventory and frequency are tracked using Firebase  
+
+<div align="center">
+  <img src="/client/src/assets/pricing-logic.png" alt="Pricing Logic" width="500"/>
+</div>
 
 ### 2. Route Optimization Algorithms
 
@@ -98,27 +103,21 @@ OptiCart is an intelligent e-commerce platform developed to assist small and med
 
 - ### Dynamic pricing ensures fast-moving products generate higher revenue
   <div align="center">
-  <img src="/client/src/assets/dynamicPricing.png" alt="Home Page" width="500"/>
-</div>
-
+    <img src="/client/src/assets/dynamicPricing.png" alt="Dynamic Pricing" width="500"/>
+  </div>
 
 - ### Slow-moving inventory is cleared at discounted prices to reduce dead stock  
 - ### Optimized routes cut down average delivery distances by 30–40%
-<div align="center">
-  <img src="/client/src/assets/TSP.png" alt="Home Page" width="500"/>
-</div>
+  <div align="center">
+    <img src="/client/src/assets/TSP.png" alt="TSP Optimized Route" width="500"/>
+  </div>
 
-
-<div align="center">
-  <img src="/client/src/assets/MST.png" alt="Home Page" width="500"/>
-</div>
-
+  <div align="center">
+    <img src="/client/src/assets/MST.png" alt="MST Route" width="500"/>
+  </div>
 
 - ### Firebase integration ensures real-time product and route synchronization  
 - ### Works efficiently for up to 15–20 delivery locations with acceptable accuracy
-
-
-
 
 ---
 
@@ -158,6 +157,54 @@ OptiCart is an intelligent e-commerce platform developed to assist small and med
   - `firebase-config.js` – Firebase initialization
 
 ---
+
+## Firebase Setup Guide
+
+1. Go to [Firebase Console](https://console.firebase.google.com/) and create a new project  
+2. Enable **Realtime Database** in test mode  
+3. Create a Firebase Web App and obtain the config (apiKey, authDomain, etc.)
+
+4. In `/client/src/firebase/firebaseProduct.js`, replace config:
+
+```js
+// firebaseProduct.js
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue } from "firebase/database";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "your-app.firebaseapp.com",
+  databaseURL: "https://your-app.firebaseio.com",
+  projectId: "your-app",
+  storageBucket: "your-app.appspot.com",
+  messagingSenderId: "xxxx",
+  appId: "xxxx"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+export { db, ref, onValue };
+```
+
+5.	Similarly update firebaseRoutes.js for route tracking
+6.	In /server/services/firebase-config.js (for admin access):
+
+```js
+// firebase-config.js
+const admin = require("firebase-admin");
+const serviceAccount = require("./your-firebase-service-account.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://your-app.firebaseio.com",
+});
+
+const db = admin.database();
+module.exports = db;
+
+```
+7.	Add the your-firebase-service-account.json to .gitignore for security
 
 ## Future Scope
 
