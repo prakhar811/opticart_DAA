@@ -15,7 +15,6 @@ An intelligent e-commerce platform with dynamic pricing and optimized delivery r
 - [Results and Discussion](#results-and-discussion)  
 - [Project Structure](#project-structure)  
 - [Future Scope](#future-scope)  
-- [License](#license)
 
 ---
 
