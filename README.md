@@ -21,7 +21,7 @@ An intelligent e-commerce platform with dynamic pricing and optimized delivery r
 
 ## Overview
 
-OptiCart is an AI-powered e-commerce platform developed to assist small and medium-scale retailers with intelligent dynamic pricing and delivery route optimization. The system adjusts product prices in real-time based on inventory and purchase trends using a momentum-based greedy pricing algorithm. It also incorporates graph-based algorithms such as the Traveling Salesman Problem (TSP) and Minimum Spanning Tree (MST) to optimize delivery paths and reduce logistics costs.
+OptiCart is an intelligent e-commerce platform developed to assist small and medium-scale retailers with intelligent dynamic pricing and delivery route optimization. The system adjusts product prices in real-time based on inventory and purchase trends using a momentum-based greedy pricing algorithm. It also incorporates graph-based algorithms such as the Traveling Salesman Problem (TSP) and Minimum Spanning Tree (MST) to optimize delivery paths and reduce logistics costs.
 
 ---
 
@@ -97,11 +97,29 @@ OptiCart is an AI-powered e-commerce platform developed to assist small and medi
 
 ## Results and Discussion
 
-- Dynamic pricing ensures fast-moving products generate higher revenue  
+- ### Dynamic pricing ensures fast-moving products generate higher revenue
+  <div align="center">
+  <img src="/client/src/assets/dynamicPricing.png" alt="Home Page" width="500"/>
+</div>
+
+
 - Slow-moving inventory is cleared at discounted prices to reduce dead stock  
-- Optimized routes cut down average delivery distances by 30–40%  
+- ### Optimized routes cut down average delivery distances by 30–40%
+<div align="center">
+  <img src="/client/src/assets/TSP.png" alt="Home Page" width="500"/>
+</div>
+
+
+<div align="center">
+  <img src="/client/src/assets/MST.png" alt="Home Page" width="500"/>
+</div>
+
+
 - Firebase integration ensures real-time product and route synchronization  
 - Works efficiently for up to 15–20 delivery locations with acceptable accuracy
+
+
+
 
 ---
 
