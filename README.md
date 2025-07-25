@@ -2,7 +2,9 @@
 
 An intelligent e-commerce platform with dynamic pricing and optimized delivery routes
 
-<img src="/client/src/assets/homepage.jpg" alt="Home Page" width="500"/>
+<div align="center">
+  <img src="client/public/assets/homepage.jpg" alt="Home Page" width="500"/>
+</div>
 
 ## Table of Contents
 - [Overview](#overview)  
